@@ -3,6 +3,7 @@
 Little bit of PHP code to parse `http://unicode.org/Public/emoji/5.0/emoji-test.txt` into a working PHP array. 
 
 Resulting array will look like (see: parse.5.0.php.txt for complete output):
+
 `
 Array
 (
