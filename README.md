@@ -1,8 +1,8 @@
 # emoji-parse
 
-Little bit of PHP code to parse `http://unicode.org/Public/emoji/5.0/emoji-test.txt` into a workable PHP array. 
+Little bit of PHP code to parse `http://unicode.org/Public/emoji/13.0/emoji-test.txt` into a workable PHP array. 
 
-Resulting array will look like (see: parse.5.0.php.txt for complete output):
+Resulting array will look like (see: ./output/print_r.13.0.txt for complete output, or ./output/13.0.sql for mysql dump file):
 
     Array
     (

@@ -1,0 +1,35 @@
+{
+    "name": "emoji-parse",
+    "dockerComposeFile": "./.docker/docker-compose.yml",
+    "service": "workspace",
+    "workspaceFolder": "/var/www/html",
+    "shutdownAction": "stopCompose",
+    // settings.json
+    "settings": {
+        "workbench.colorTheme": "Default Light+",
+        "workbench.iconTheme": "vscode-great-icons",
+        "editor.fontFamily": "'SFMono-Regular',Consolas,'Liberation Mono',Menlo,Courier,monospace",
+        "editor.fontSize": 10,
+        "editor.fontLigatures": true,
+        "editor.quickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.autoClosingQuotes": "never",
+        "editor.defaultFormatter": "HookyQR.beautify",
+        "editor.wordWrapColumn": 120,
+        "editor.formatOnSave": false,
+        "terminal.integrated.rendererType": "dom",
+        "terminal.integrated.fontSize": 12,
+        "git.autofetch": true,
+        "git.autorefresh": false,
+        "git.enableSmartCommit": true,
+        "git.confirmSync": false,
+        "debug.inlineValues": true,
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "extensions.ignoreRecommendations": true,
+        "telemetry.enableTelemetry": false,
+        "explorer.confirmDelete": false
+    },
+    "extensions": [
+        "emmanuelbeziat.vscode-great-icons",
+    ]
+}

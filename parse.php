@@ -4,21 +4,25 @@
  * 
  * http://unicode.org/Public/emoji/13.0/emoji-test.txt
  */
+$version = '13.0';
  
-if (!file_exists('emoji-test.txt')) {
-    file_put_contents('emoji-test.txt', file_get_contents('http://unicode.org/Public/emoji/13.0/emoji-test.txt'));
+if (!file_exists('./emoji-test/'.$version.'.txt')) {
+    file_put_contents(
+        './emoji-test/'.$version.'.txt', 
+        file_get_contents('http://unicode.org/Public/emoji/'.$version.'/emoji-test.txt')
+    );
 }
 
 // break into blocks
-$blocks = explode(PHP_EOL.PHP_EOL, file_get_contents('emoji-test.txt'));
+$blocks = explode(PHP_EOL.PHP_EOL, file_get_contents('./emoji-test/'.$version.'.txt'));
 
 // unset header
 unset($blocks[0]);
 
 $emoji = [];
 
-foreach ($blocks as $chunk) {
-    $top = explode(PHP_EOL, $chunk)[0];
+foreach ($blocks as $index => $chunk) {
+    $top = explode(PHP_EOL, trim($chunk))[0];
 
     if (substr($top, 0, strlen('# group:')) == '# group:') {
         $group = trim(str_replace('# group:', '', $top));
@@ -29,13 +33,15 @@ foreach ($blocks as $chunk) {
 
         foreach ($lines as $line) {
 
+            if (!isset($group)) continue;
+
             $subgroup = trim(str_replace('# subgroup:', '', $top));
 
             $linegroup = explode(';', $line);
 
             $parts = explode('#', $linegroup[1]);
 
-            $icon = explode(' ', trim($parts[1]), 2);
+            $icon = explode(' ', trim($parts[1]), 3);
 
             $emoji[$group][$subgroup][] = [
                 'group' => trim($group),
@@ -43,12 +49,13 @@ foreach ($blocks as $chunk) {
                 'name' => isset($linegroup[0]) ? trim($linegroup[0]) : '',
                 'status' => isset($parts[0]) ? trim($parts[0]) : '',
                 'emoji' => isset($icon[0]) ? trim($icon[0]) : '',
-                'description' => isset($icon[1]) ? trim($icon[1]) : '',
+                'version' => isset($icon[1]) ? trim($icon[1]) : '',
+                'description' => isset($icon[2]) ? trim($icon[2]) : ''
             ];
         }
     }
 }
 
-header('Content-Type: text/plain;charset=UTF-8');
-file_put_contents('parse.13.0.php.txt', print_r($emoji, true));
-print_r($emoji);
+// out
+// - print_r
+file_put_contents('./output/print_r.'.$version.'.txt', print_r($emoji, true));

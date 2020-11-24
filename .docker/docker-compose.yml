@@ -1,0 +1,51 @@
+version: "2"
+
+networks:
+  workspace-network:
+    ipam:
+      config:
+        - subnet: 10.1.1.0/24
+          gateway: 10.1.1.1
+
+services:
+  workspace:
+    build: .
+    hostname: workspace
+    container_name: workspace
+    ports:
+      - 8080:80
+    volumes:
+      - ../:/var/www/html
+      - ~/.ssh:/root/.ssh
+      - ~/.gitconfig:/root/.gitconfig
+    environment:
+      APP_WEBROOT: /var/www/html
+      DB_ROOTPASS: 123456
+      DB_HOSTNAME: db
+      DB_USERNAME: app
+      DB_PASSWORD: 123456
+      DB_DATABASE: app
+    links:
+      - db:mysql
+    dns: 208.67.222.222
+    networks:
+      - workspace-network
+    command: sleep infinity
+
+  db:
+    image: mariadb
+    hostname: db
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      - workspace-network
+
+  adminer:
+    image: adminer
+    hostname: adminer
+    container_name: adminer
+    ports:
+      - 8888:8080
+    networks:
+      - workspace-network
